@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<a th:href="@{/logout/{userId}(userId=${user.getId()})}">logout</a>
+	</div>
+	<br />
+	<div>
+		Welcome <span th:text="${user.getUsername()}"></span>
+	</div>
+	<div>
+		Wallet Balance: <span th:text="${user.getWallet().getAmount()}"></span>
+	</div>
+	<br>
+	<div>
+		<span th:text="${error}" style="color: red;"></span>
+		<span th:text="${success}" style="color: green;"></span>
+	</div>
+	<hr/>
+	<div>
+		<form th:action="@{/credit/{userId}(userId=${user.getId()})}" method="post">
+			<table>
+				<tr>
+					<td><input type="number" name='amount' placeholder="Credit Amount" min="1" required="required" style="width: 200px"></td>
+					<td><input name="submit" type="submit" value="credit" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<hr/>
+	<div>
+		<form th:action="@{/debit/{userId}(userId=${user.getId()})}" method="post">
+			<table>
+				<tr>
+					<td><input type="number" name='amount' placeholder="Debit Amount" min="1" style="width: 200px" th:max="@{{max}(max=${user.getWallet().getAmount()})}" required="required"></td>
+					<td><input name="submit" type="submit" value="debit" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
