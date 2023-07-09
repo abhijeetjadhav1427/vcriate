@@ -15,7 +15,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public User getUserById(int userId) {
-		return userRepository.findById(userId).orElse(null);
+		return userRepository.findByIdWithSortedHistory(userId);
 	}
 
 	public User getUser(LoginRequest request) {

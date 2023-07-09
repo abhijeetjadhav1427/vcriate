@@ -1,5 +1,7 @@
 package com.vcriate.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -27,10 +30,15 @@ public class User {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
 	@JsonManagedReference
-    private Wallet wallet;
+	private Wallet wallet;
 
-	public User() {}
-			
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<History> history;
+
+	public User() {
+	}
+
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -75,6 +83,14 @@ public class User {
 
 	public void setWallet(Wallet wallet) {
 		this.wallet = wallet;
+	}
+
+	public List<History> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<History> history) {
+		this.history = history;
 	}
 
 }
